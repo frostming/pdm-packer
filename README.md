@@ -100,6 +100,7 @@ pdm pack -o app.pyz -m app:main
 1. If the result zipapp contains binaries, it can only be deployed to the platforms with the same abi, any cross-abi usage of that app might expect a failure.
 2. Any console scripts except for what is given to `--main` will be lost.
 3. The .exe file is different from what is produced by `pyinstaller` in the way that it doesn't embed a Python interpreter. This means you have to install a Python with exactly the same version on the deployment platform.
+4. If you have code to run in your project, the project itself should be installed into `__pypackages__` as well. Make sure you have set a project name in `pyproject.toml`.
 
 ## About executable zipapp
 
