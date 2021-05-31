@@ -63,7 +63,8 @@ $ pdm pack [common-options] [pack-options]
 
 `-o OUTPUT, --output OUTPUT`
 
-> Specify the output filename
+> Specify the output filename. By default the file name
+> will be inferred from the project name.
 
 `-c, --compress`
 
