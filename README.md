@@ -95,6 +95,12 @@ pdm pack --exe
 pdm pack -o app.pyz -m app:main
 ```
 
+## Caveats
+
+1. If the result zipapp contains binaries, it can only be deployed to the platforms with the same abi, any cross-abi usage of that app might expect a failure.
+2. Any console scripts except for what is given to `--main` will be lost.
+3. The .exe file is different from what is produced by `pyinstaller` in the way that it doesn't embed a Python interpreter. This means you have to install a Python with exactly the same version on the deployment platform.
+
 ## About executable zipapp
 
 By default, zipapp is created with `.pyz` suffix. On Windows, if you have associted `.pyz` files with Python program, you can run the app by double-clicking the file in the explorer. But if you create the app with `--exe` turn on, you can have a .exe file on Windows and an **executable** file
