@@ -101,6 +101,6 @@ By default, zipapp is created with `.pyz` suffix. On Windows, if you have associ
 on Unix-like systems, so that the app can be executed without a `python` command prefixing it and
 no matter you assoicated the file exensition properly or not.
 
-## Changlog
+## Changelog
 
 See [CHANGELOG.md](https://github.com/frostming/pdm-packer/blob/main/CHANGELOG.md)
