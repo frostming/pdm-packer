@@ -5,3 +5,10 @@
     :author: Frost Ming <mianghong@gmail.com>
     :license: MIT
 """
+from pdm import Core
+
+from .command import PackCommand
+
+
+def plugin(core: Core) -> None:
+    core.register_command(PackCommand)

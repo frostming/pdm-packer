@@ -24,7 +24,7 @@ Repository = "https://github.com/frostming/pdm-packer"
 Homepage = "https://github.com/frostming/pdm-packer"
 
 [project.entry-points.pdm]
-pdm-packer = "pdm_packer.plugin:entrypoint"
+pdm-packer = "pdm_packer:plugin"
 
 [tool.pdm]
 package-dir = "src"

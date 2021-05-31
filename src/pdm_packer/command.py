@@ -8,6 +8,7 @@ from pathlib import Path
 
 from pdm import BaseCommand, Project, termui
 from pdm.models.in_process import get_architecture
+from pip._vendor.pkg_resources import to_filename
 
 from .env import PackEnvironment
 
@@ -22,7 +23,10 @@ class PackCommand(BaseCommand):
             "-m", "--main", help="Specify the console script entry point for the zipapp"
         )
         parser.add_argument(
-            "-o", "--output", help="Specify the output filename", type=Path
+            "-o",
+            "--output",
+            help="Specify the output filename, default: the project name",
+            type=Path,
         )
         parser.add_argument(
             "-c",
@@ -58,9 +62,10 @@ class PackCommand(BaseCommand):
             bytes = launcher + bytes
 
         if options.output:
-            output = Path(options.output)
+            output = options.output
         else:
             name = project.meta.name or project.root.name
+            name = to_filename(name)
             suffix = ".pyz" if not options.exe else ".exe" if os.name == "nt" else ""
             output = Path(name + suffix)
 
@@ -86,7 +91,7 @@ class PackCommand(BaseCommand):
         else:
             scripts = project.meta.get("scripts", {})
             if scripts:
-                main = scripts[next(iter(scripts))]
+                main = str(scripts[next(iter(scripts))])
 
         target_stream = io.BytesIO()
 

@@ -38,6 +38,7 @@ class PackEnvironment(Environment):
         project = self.project
         project_paths = project.environment.get_paths()
         this_paths = self.get_paths()
+        Path(this_paths["scripts"]).mkdir(exist_ok=True)
         for path in {project_paths["platlib"], project_paths["purelib"]}:
             shutil.copytree(path, this_paths["purelib"])
 
