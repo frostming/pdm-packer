@@ -1,0 +1,17 @@
+# Changes here will be overwritten by Copier
+_commit: 0.2.0
+_src_path: gh:pdm-project/copier-pdm
+author_email: mianghong@gmail.com
+author_fullname: Frost Ming
+author_username: frostming
+copyright_date: '2021'
+copyright_holder: Frost Ming
+copyright_holder_email: mianghong@gmail.com
+copyright_license: MIT
+project_description: A PDM plugin that packs your packages into a zipapp
+project_name: pdm-packer
+python_package_distribution_name: pdm-packer
+python_package_import_name: pdm_packer
+python_package_requires_python: '>=3.7'
+repository_name: pdm-packer
+repository_namespace: frostming

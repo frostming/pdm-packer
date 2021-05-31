@@ -1,0 +1,113 @@
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[project]
+name = "pdm-packer"
+version = {use_scm = true}
+description = "A PDM plugin that packs your packages into a zipapp"
+authors = [
+    {name = "Frost Ming", email = "<mianghong@gmail.com>"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = ["pdm>=1.6"]
+dynamic = ["version", "classifiers"]
+
+classifiers = [
+    "Development Status :: 3 - Alpha"
+]
+
+[project.urls]
+Repository = "https://github.com/frostming/pdm-packer"
+Homepage = "https://github.com/frostming/pdm-packer"
+
+[project.entry-points.pdm]
+pdm-packer = "pdm_packer.plugin:entrypoint"
+
+[tool.pdm]
+package-dir = "src"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest~=6.1",
+    "towncrier~=19.2",
+    "parver~=0.3"
+]
+
+[tool.pdm.scripts]
+release = "python -m tasks.release"
+test = "pytest tests/"
+doc = {shell = "cd docs && mkdocs serve", help = "Start the dev server for doc preview"}
+lint = "pre-commit run --all-files"
+
+[tool.black]
+line-length = 88
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | tests/fixtures
+)/
+'''
+
+[tool.towncrier]
+package = "pdm_packer"
+filename = "CHANGELOG.md"
+issue_format = "[#{issue}](https://github.com/frostming/pdm-packer/issues/{issue})"
+directory = "news/"
+start_string = "<!-- insertion marker -->"
+title_format = "[v{version}](https://github.com/frostming/pdm-packer/releases/tag/{version}) ({project_date})"
+template = "news/towncrier_template.md"
+underlines = "-~^"
+
+  [[tool.towncrier.type]]
+  directory = "feature"
+  name = "Features & Improvements"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "bugfix"
+  name = "Bug Fixes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "doc"
+  name = "Improved Documentation"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "dep"
+  name = "Dependencies"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "removal"
+  name = "Removals and Deprecations"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "misc"
+  name = "Miscellany"
+  showcontent = true
+
+[tool.isort]
+profile = "black"
+atomic = true
+skip_glob = ["*/setup.py"]
+filter_files = true
+known_first_party = ["pdm_packer"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore::DeprecationWarning"
+]
