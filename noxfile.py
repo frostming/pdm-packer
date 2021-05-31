@@ -1,5 +1,6 @@
-import nox
 import os
+
+import nox
 
 os.environ["PDM_IGNORE_SAVED_PYTHON"] = "1"
 

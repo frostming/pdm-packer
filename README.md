@@ -4,6 +4,7 @@
 [![pypi version](https://img.shields.io/pypi/v/pdm-packer.svg)](https://pypi.org/project/pdm-packer/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/frostming/pdm-packer/main.svg)](https://results.pre-commit.ci/latest/github/frostming/pdm-packer/main)
+[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
 
 A PDM plugin that packs your packages into a zipapp
 
