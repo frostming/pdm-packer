@@ -57,6 +57,7 @@ def test_create_normal_pyz(example_project, invoke, tmp_path):
         namelist = zf.namelist()
         assert "requests/__init__.py" in namelist
         assert "chardet/__init__.py" in namelist
+        assert "app.py" in namelist
         assert not any(name.endswith(".pyc") for name in namelist)
         assert not any(".dist-info" in name for name in namelist)
 
