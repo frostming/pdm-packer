@@ -70,35 +70,35 @@ title_format = "[v{version}](https://github.com/frostming/pdm-packer/releases/ta
 template = "news/towncrier_template.md"
 underlines = "-~^"
 
-  [[tool.towncrier.type]]
-  directory = "feature"
-  name = "Features & Improvements"
-  showcontent = true
+[[tool.towncrier.type]]
+directory = "feature"
+name = "Features & Improvements"
+showcontent = true
 
-  [[tool.towncrier.type]]
-  directory = "bugfix"
-  name = "Bug Fixes"
-  showcontent = true
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Bug Fixes"
+showcontent = true
 
-  [[tool.towncrier.type]]
-  directory = "doc"
-  name = "Improved Documentation"
-  showcontent = true
+[[tool.towncrier.type]]
+directory = "doc"
+name = "Improved Documentation"
+showcontent = true
 
-  [[tool.towncrier.type]]
-  directory = "dep"
-  name = "Dependencies"
-  showcontent = true
+[[tool.towncrier.type]]
+directory = "dep"
+name = "Dependencies"
+showcontent = true
 
-  [[tool.towncrier.type]]
-  directory = "removal"
-  name = "Removals and Deprecations"
-  showcontent = true
+[[tool.towncrier.type]]
+directory = "removal"
+name = "Removals and Deprecations"
+showcontent = true
 
-  [[tool.towncrier.type]]
-  directory = "misc"
-  name = "Miscellany"
-  showcontent = true
+[[tool.towncrier.type]]
+directory = "misc"
+name = "Miscellany"
+showcontent = true
 
 [tool.isort]
 profile = "black"
