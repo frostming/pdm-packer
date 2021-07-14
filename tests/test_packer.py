@@ -28,7 +28,7 @@ def example_project(invoke, main):
         input="\ny\ntest-app\n0.1.0\n\n\n\n>=3.6\n",
         obj=project,
     )
-    invoke(["add", "requests"], obj=project)
+    invoke(["add", "requests==2.24.0"], obj=project)
 
     return project
 
@@ -56,9 +56,9 @@ def test_create_normal_pyz(example_project, invoke, tmp_path):
     with zipfile.ZipFile(output) as zf:
         namelist = zf.namelist()
         assert "requests/__init__.py" in namelist
-        assert "chardet/__init__.py" in namelist
+        assert "urllib3/__init__.py" in namelist
         assert "app.py" in namelist
-        assert not any(name.endswith(".pyc") for name in namelist)
+        assert any(name.endswith(".pyc") for name in namelist)
         assert not any(".dist-info" in name for name in namelist)
 
         main = [
@@ -69,6 +69,17 @@ def test_create_normal_pyz(example_project, invoke, tmp_path):
         assert main == ["import app", "app.main()"]
 
     subprocess.check_call([sys.executable, str(output)])
+
+
+def test_create_pyz_without_pyc(example_project, invoke, tmp_path):
+    with cd(tmp_path):
+        invoke(["pack", "-m", "app:main", "--no-pyc"], obj=example_project)
+    output = tmp_path / "test_app.pyz"
+    assert output.exists()
+
+    with zipfile.ZipFile(output) as zf:
+        namelist = zf.namelist()
+        assert not any(name.endswith(".pyc") for name in namelist)
 
 
 def test_pack_respect_console_script(example_project, invoke, tmp_path):
