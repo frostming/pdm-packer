@@ -34,6 +34,9 @@ class PackCommand(BaseCommand):
             help="Compress files with the deflate method, no compress by default",
         )
         parser.add_argument(
+            "--no-pyc", action="store_true", help="Don't include compiled .pyc files"
+        )
+        parser.add_argument(
             "-i",
             "--interpreter",
             help="The Python interpreter path, default: the project interpreter",
@@ -81,7 +84,8 @@ class PackCommand(BaseCommand):
                 first.endswith(".dist-info")
                 or first.endswith(".egg")
                 or last.endswith(".egg-link")
-                or last.endswith(".pyc")
+                or options.no_pyc
+                and last.endswith(".pyc")
             )
 
         main = None
