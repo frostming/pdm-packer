@@ -14,6 +14,12 @@ pdm-packer requires Python >=3.7
 
 ## Installation
 
+On PDM 1.6.4+, you can install the plugin directly by:
+
+```bash
+$ pdm plugin add pdm-venv
+```
+
 If you have installed PDM with the recommended tool `pipx`, add this plugin by:
 
 ```bash
