@@ -1,7 +1,6 @@
-import py_compile
 import os
+import py_compile
 import sys
-
 
 IGNORE_DIRS = ["__pycache__"]
 
