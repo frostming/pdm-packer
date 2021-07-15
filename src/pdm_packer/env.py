@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
@@ -10,6 +11,8 @@ from pdm.models.candidates import Candidate
 from pdm.models.environment import Environment
 from pdm.utils import cached_property
 from pip._vendor.pkg_resources import Distribution, EggInfoDistribution
+
+IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
 
 
 def is_dist_editable(dist: Distribution) -> bool:
@@ -31,7 +34,11 @@ class PackEnvironment(Environment):
     def __exit__(self, *args: Any) -> None:
         self._dir.cleanup()
 
-    def prepare_lib_for_pack(self) -> Path:
+    def _compile_to_pyc(self, dest: Path) -> None:
+        args = [self.interpreter.executable, IN_PROCESS_SCRIPT, str(dest)]
+        subprocess.check_output(args)
+
+    def prepare_lib_for_pack(self, compile: bool = False) -> Path:
         """Get a lib path containing all dependencies for pack.
         Editable packages will be replaced by non-editable ones.
         """
@@ -56,4 +63,7 @@ class PackEnvironment(Environment):
             candidates, self, install_self=install_self, no_editable=True
         )
         synchronizer.synchronize()
-        return Path(this_paths["purelib"])
+        dest = Path(this_paths["purelib"])
+        if compile:
+            self._compile_to_pyc(dest)
+        return dest

@@ -34,7 +34,11 @@ class PackCommand(BaseCommand):
             help="Compress files with the deflate method, no compress by default",
         )
         parser.add_argument(
-            "--no-pyc", action="store_true", help="Don't include compiled .pyc files"
+            "--pyc",
+            "--compile",
+            dest="compile",
+            action="store_true",
+            help="Compile source into pyc files",
         )
         parser.add_argument(
             "-i",
@@ -78,13 +82,15 @@ class PackCommand(BaseCommand):
 
     def handle(self, project: Project, options: argparse.Namespace) -> None:
         def file_filter(name: str) -> bool:
-            first = Path(name).parts[0]
-            last = Path(name).name
+            path = Path(name)
+            first = path.parts[0]
+            last = path.name
             return not (
                 first.endswith(".dist-info")
                 or first.endswith(".egg")
                 or last.endswith(".egg-link")
-                or options.no_pyc
+                or "__pycache__" in path.parts
+                or not options.compile
                 and last.endswith(".pyc")
             )
 
@@ -100,7 +106,7 @@ class PackCommand(BaseCommand):
 
         with PackEnvironment(project) as pack_env:
             project.core.ui.echo("Packing packages...")
-            lib = pack_env.prepare_lib_for_pack()
+            lib = pack_env.prepare_lib_for_pack(compile=options.compile)
             project.core.ui.echo(f"Packages are prepared at {lib}")
             project.core.ui.echo("Creating zipapp...")
             zipapp.create_archive(
