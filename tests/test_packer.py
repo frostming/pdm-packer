@@ -42,8 +42,8 @@ def test_pack_env_all_non_editable(example_project):
 
 
 def test_create_without_main_error(example_project, invoke):
-    with pytest.raises(RuntimeError):
-        invoke(["pack"], obj=example_project)
+    result = invoke(["pack"], raising=False, obj=example_project)
+    assert result.exit_code != 0
 
 
 def test_create_normal_pyz(example_project, invoke, tmp_path):
@@ -73,7 +73,7 @@ def test_create_normal_pyz(example_project, invoke, tmp_path):
 
 def test_create_pyz_with_pyc(example_project, invoke, tmp_path):
     with cd(tmp_path):
-        invoke(["pack", "-m", "app:main", "--compile"], obj=example_project)
+        invoke(["pack", "-v", "-m", "app:main", "--compile"], obj=example_project)
     output = tmp_path / "test_app.pyz"
     assert output.exists()
 

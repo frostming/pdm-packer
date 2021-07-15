@@ -14,9 +14,13 @@ def invoke(main):
     runner = CliRunner(mix_stderr=False)
 
     def caller(args, *, raising=True, **extras):
-        result = runner.invoke(main, args, prog_name="pdm", **extras)
-        if raising and result.exit_code != 0:
-            raise RuntimeError(f"Call command {args} failed: {result.output}")
+        result = runner.invoke(
+            main, args, prog_name="pdm", catch_exceptions=not raising, **extras
+        )
+        if result.exit_code != 0 and raising:
+            raise RuntimeError(
+                f"Calling command {args} failed with exit code: {result.exit_code}"
+            )
         return result
 
     return caller

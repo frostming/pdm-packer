@@ -35,8 +35,8 @@ class PackEnvironment(Environment):
         self._dir.cleanup()
 
     def _compile_to_pyc(self, dest: Path) -> None:
-        args = [self.interpreter.executable, IN_PROCESS_SCRIPT, str(dest)]
-        subprocess.check_output(args)
+        args = [self.interpreter.executable, str(IN_PROCESS_SCRIPT), str(dest)]
+        subprocess.check_output(args, stderr=subprocess.STDOUT)
 
     def prepare_lib_for_pack(self, compile: bool = False) -> Path:
         """Get a lib path containing all dependencies for pack.
