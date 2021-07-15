@@ -1,12 +1,12 @@
 # Changelog
 
 <!-- insertion marker -->
-[v0.1.3](https://github.com/frostming/pdm-packer/releases/tag/0.1.3) (2021-07-14)
+[v0.2.0](https://github.com/frostming/pdm-packer/releases/tag/0.2.0) (2021-07-15)
 ---------------------------------------------------------------------------------
 
 ### Features & Improvements
 
-- .pyc files are included in the package by default. Add `--no-pyc` option to exclude them. [#7](https://github.com/frostming/pdm-packer/issues/7)
+- Add `--pyc/--compile` to compile source files into pyc. Compiled files are placed next to the source files to be loaded by `zipimport` for speedup.  [#7](https://github.com/frostming/pdm-packer/issues/7)
 
 
 [v0.1.1](https://github.com/frostming/pdm-packer/releases/tag/0.1.1) (2021-06-07)
