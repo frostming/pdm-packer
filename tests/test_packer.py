@@ -46,6 +46,11 @@ def test_create_without_main_error(example_project, invoke):
     assert result.exit_code != 0
 
 
+def test_no_py_not_with_compile(example_project, invoke):
+    result = invoke(["pack", "--no-py"], raising=False, obj=example_project)
+    assert result.exit_code != 0
+
+
 def test_create_normal_pyz(example_project, invoke, tmp_path):
     with cd(tmp_path):
         invoke(["pack", "-m", "app:main"], obj=example_project)
@@ -81,6 +86,24 @@ def test_create_pyz_with_pyc(example_project, invoke, tmp_path):
         namelist = zf.namelist()
         assert "app.pyc" in namelist
         assert "requests/__init__.pyc" in namelist
+        assert "requests/__init__.py" in namelist
+        assert "urllib3/__init__.pyc" in namelist
+
+
+def test_create_pyz_without_py(example_project, invoke, tmp_path):
+    with cd(tmp_path):
+        invoke(
+            ["pack", "-v", "-m", "app:main", "--compile", "--no-py"],
+            obj=example_project,
+        )
+    output = tmp_path / "test_app.pyz"
+    assert output.exists()
+
+    with zipfile.ZipFile(output) as zf:
+        namelist = zf.namelist()
+        assert "app.pyc" in namelist
+        assert "requests/__init__.pyc" in namelist
+        assert "requests/__init__.py" not in namelist
         assert "urllib3/__init__.pyc" in namelist
 
 

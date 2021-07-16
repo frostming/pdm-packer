@@ -7,6 +7,7 @@ import zipapp
 from pathlib import Path
 
 from pdm import BaseCommand, Project, termui
+from pdm.exceptions import PdmUsageError
 from pdm.models.in_process import get_architecture
 
 from .env import PackEnvironment
@@ -39,6 +40,11 @@ class PackCommand(BaseCommand):
             dest="compile",
             action="store_true",
             help="Compile source into pyc files",
+        )
+        parser.add_argument(
+            "--no-py",
+            action="store_true",
+            help="Remove the .py files in favor of .pyc files",
         )
         parser.add_argument(
             "-i",
@@ -90,11 +96,15 @@ class PackCommand(BaseCommand):
                 or first.endswith(".egg")
                 or last.endswith(".egg-link")
                 or "__pycache__" in path.parts
+                or options.no_py
+                and last.endswith(".py")
                 or not options.compile
                 and last.endswith(".pyc")
             )
 
         main = None
+        if options.no_py and not options.compile:
+            raise PdmUsageError("--no-py must be used with --pyc/--compile")
         if options.main:
             main = options.main
         else:
