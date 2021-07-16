@@ -77,6 +77,14 @@ $ pdm pack [common-options] [pack-options]
 > Compress files with the deflate method, no
 > compress by default
 
+`--pyc, --compile`
+
+> Compile source into pyc files
+
+`--no-py`
+
+> Remove the .py files in favor of .pyc files
+
 `-i INTERPRETER, --interpreter INTERPRETER`
 
 > The Python interpreter path, default: the
