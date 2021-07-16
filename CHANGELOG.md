@@ -1,6 +1,14 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.2.1](https://github.com/frostming/pdm-packer/releases/tag/0.2.1) (2021-07-16)
+---------------------------------------------------------------------------------
+
+### Features & Improvements
+
+- Introduce `--no-py` to exclude py files in the result zipapp. [#9](https://github.com/frostming/pdm-packer/issues/9)
+
+
 [v0.2.0](https://github.com/frostming/pdm-packer/releases/tag/0.2.0) (2021-07-15)
 ---------------------------------------------------------------------------------
 
