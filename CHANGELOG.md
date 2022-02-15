@@ -1,6 +1,18 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.3.0](https://github.com/frostming/pdm-packer/releases/tag/0.3.0) (2022-02-15)
+---------------------------------------------------------------------------------
+
+### Features & Improvements
+
+- Reinstall all **default** depenencies when packing the application. [#12](https://github.com/frostming/pdm-packer/issues/12)
+
+### Bug Fixes
+
+- Fix the compatibility issue with the latest PDM version. [#12](https://github.com/frostming/pdm-packer/issues/12)
+
+
 [v0.2.1](https://github.com/frostming/pdm-packer/releases/tag/0.2.1) (2021-07-16)
 ---------------------------------------------------------------------------------
 
