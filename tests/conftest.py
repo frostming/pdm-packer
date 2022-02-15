@@ -19,7 +19,8 @@ def invoke(main):
         )
         if result.exit_code != 0 and raising:
             raise RuntimeError(
-                f"Calling command {args} failed with exit code: {result.exit_code}"
+                f"Calling command {args} failed with exit code: {result.exit_code}\n"
+                f"{result.stderr}"
             )
         return result
 

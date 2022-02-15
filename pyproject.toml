@@ -4,7 +4,6 @@ build-backend = "pdm.pep517.api"
 
 [project]
 name = "pdm-packer"
-version = {use_scm = true}
 description = "A PDM plugin that packs your packages into a zipapp"
 authors = [
     {name = "Frost Ming", email = "mianghong@gmail.com"}
@@ -12,11 +11,19 @@ authors = [
 license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.7"
-dependencies = ["pdm>=1.6"]
-dynamic = ["version", "classifiers"]
+dependencies = [
+    "pdm>=1.8",
+    "distlib>=0.3.4; sys_platform == \"win32\"",
+]
+dynamic = ["version"]
 
 classifiers = [
-    "Development Status :: 3 - Alpha"
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10"
 ]
 
 [project.urls]
@@ -27,13 +34,14 @@ Homepage = "https://github.com/frostming/pdm-packer"
 pdm-packer = "pdm_packer:plugin"
 
 [tool.pdm]
+version = {use_scm = true}
 package-dir = "src"
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "pytest~=6.1",
+    "pytest>=6.1",
     "towncrier~=19.2",
-    "parver~=0.3"
+    "parver>=0.3"
 ]
 
 [tool.pdm.scripts]
