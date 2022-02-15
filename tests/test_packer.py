@@ -8,9 +8,9 @@ from pathlib import Path
 
 import pytest
 from pdm.models.pip_shims import global_tempdir_manager
-from pdm.utils import cd
+from pdm.utils import cd, is_editable
 
-from pdm_packer.env import PackEnvironment, is_dist_editable
+from pdm_packer.env import PackEnvironment
 
 
 @pytest.fixture(scope="module")
@@ -23,12 +23,17 @@ def example_project(invoke, main):
         "import requests\ndef main():\n    print(requests.__version__)\n"
     )
     project = main.create_project(tmp_path)
-    invoke(
-        ["init"],
-        input="\ny\ntest-app\n0.1.0\n\n\n\n>=3.6\n",
-        obj=project,
-    )
-    invoke(["add", "requests==2.24.0"], obj=project)
+    project.pyproject = {
+        "project": {
+            "name": "test_app",
+            "version": "0.1.0",
+            "requires-python": ">=3.7",
+            "dependencies": ["requests==2.24.0"],
+        },
+        "build-system": {"requires": ["pdm-pep517"], "build-backend": "pdm.pep517.api"},
+    }
+    project.write_pyproject()
+    invoke(["install"], obj=project)
 
     return project
 
@@ -38,7 +43,7 @@ def test_pack_env_all_non_editable(example_project):
         with PackEnvironment(example_project) as env:
             env.prepare_lib_for_pack()
             for _, v in env.get_working_set().items():
-                assert not is_dist_editable(v)
+                assert not is_editable(v)
 
 
 def test_create_without_main_error(example_project, invoke):

@@ -1,22 +1,16 @@
 from __future__ import annotations
 
-import shutil
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
 from pdm import Project
-from pdm.models.candidates import Candidate
 from pdm.models.environment import Environment
 from pdm.utils import cached_property
-from pip._vendor.pkg_resources import Distribution, EggInfoDistribution
+from pdm.cli.actions import resolve_candidates_from_lockfile
 
 IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
-
-
-def is_dist_editable(dist: Distribution) -> bool:
-    return isinstance(dist, EggInfoDistribution) or getattr(dist, "editable", False)
 
 
 class PackEnvironment(Environment):
@@ -43,24 +37,11 @@ class PackEnvironment(Environment):
         Editable packages will be replaced by non-editable ones.
         """
         project = self.project
-        project_paths = project.environment.get_paths()
         this_paths = self.get_paths()
-        Path(this_paths["scripts"]).mkdir(exist_ok=True)
-        for path in {project_paths["platlib"], project_paths["purelib"]}:
-            shutil.copytree(path, this_paths["purelib"])
-
-        locked_repository = project.locked_repository
-        candidates: dict[str, Candidate] = {}
-        install_self = False
-        for k, dist in project.environment.get_working_set().items():
-            if is_dist_editable(dist):
-                if project.meta.name and k == project.meta.project_name:
-                    install_self = True
-                else:
-                    candidates[k] = locked_repository.all_candidates[k]
-
+        requirements = project.get_dependencies().values()
+        candidates = resolve_candidates_from_lockfile(project, requirements)
         synchronizer = project.core.synchronizer_class(
-            candidates, self, install_self=install_self, no_editable=True
+            candidates, self, install_self=bool(project.meta.name), no_editable=True
         )
         synchronizer.synchronize()
         dest = Path(this_paths["purelib"])
