@@ -8,7 +8,6 @@ from pathlib import Path
 
 from pdm import BaseCommand, Project, termui
 from pdm.exceptions import PdmUsageError
-from pdm.models.in_process import get_architecture
 
 from .env import PackEnvironment
 
@@ -67,8 +66,7 @@ class PackCommand(BaseCommand):
             os.name == "nt" or (os.name == "java" and os._name == "nt")
         ):
             interpreter = options.interpreter or project.python.executable
-            arch = get_architecture(interpreter)
-            bits = "32" if "32bit" in arch else "64"
+            bits = "32" if project.python.is_32bit else "64"
             kind = "w" if "pythonw" in Path(interpreter).name else "t"
             launcher = importlib.resources.read_binary("distlib", f"{kind}{bits}.exe")
             bytes = launcher + bytes
