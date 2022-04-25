@@ -1,6 +1,14 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.3.1](https://github.com/frostming/pdm-packer/releases/tag/0.3.1) (2022-04-25)
+---------------------------------------------------------------------------------
+
+### Bug Fixes
+
+- Fix the compatibility issue about the `get_architecture()` function. [#14](https://github.com/frostming/pdm-packer/issues/14)
+
+
 [v0.3.0](https://github.com/frostming/pdm-packer/releases/tag/0.3.0) (2022-02-15)
 ---------------------------------------------------------------------------------
 
