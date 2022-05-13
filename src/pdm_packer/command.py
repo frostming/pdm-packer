@@ -120,7 +120,7 @@ class PackCommand(BaseCommand):
             zipapp.create_archive(
                 lib,
                 target_stream,
-                interpreter=options.interpreter or project.python.executable,
+                interpreter=options.interpreter or str(project.python.executable),
                 main=main,
                 compressed=options.compress,
                 filter=file_filter,
