@@ -1,6 +1,14 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.3.2](https://github.com/frostming/pdm-packer/releases/tag/0.3.2) (2022-05-13)
+---------------------------------------------------------------------------------
+
+### Bug Fixes
+
+- Fix a bug that the default interpreter is not a string due to API change in PDM. [#15](https://github.com/frostming/pdm-packer/issues/15)
+
+
 [v0.3.1](https://github.com/frostming/pdm-packer/releases/tag/0.3.1) (2022-04-25)
 ---------------------------------------------------------------------------------
 
