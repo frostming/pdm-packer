@@ -5,9 +5,9 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
-from pdm import Project
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.models.environment import Environment
+from pdm.project import Project
 from pdm.utils import cached_property
 
 IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")

@@ -6,8 +6,9 @@ import stat
 import zipapp
 from pathlib import Path
 
-from pdm import BaseCommand, Project, termui
+from pdm.cli.commands.base import BaseCommand
 from pdm.exceptions import PdmUsageError
+from pdm.project import Project
 
 from .env import PackEnvironment
 
@@ -126,4 +127,4 @@ class PackCommand(BaseCommand):
                 filter=file_filter,
             )
             output = self._write_zipapp(target_stream, project, options)
-            project.core.ui.echo(f"Zipapp is generated at {termui.green(str(output))}")
+            project.core.ui.echo(f"Zipapp is generated at [green]{output}[/]")

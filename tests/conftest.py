@@ -1,16 +1,16 @@
 """Configuration for the pytest test suite."""
 import pytest
 from click.testing import CliRunner
-from pdm import Core
+from pdm.core import Core
 
 
 @pytest.fixture(scope="session")
-def main():
+def main() -> Core:
     return Core()
 
 
 @pytest.fixture(scope="session")
-def invoke(main):
+def invoke(main: Core):
     runner = CliRunner(mix_stderr=False)
 
     def caller(args, *, raising=True, **extras):
