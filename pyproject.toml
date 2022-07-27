@@ -12,7 +12,6 @@ license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
-    "pdm>=1.8",
     "distlib>=0.3.4; sys_platform == \"win32\"",
 ]
 dynamic = ["version"]
@@ -34,13 +33,16 @@ Homepage = "https://github.com/frostming/pdm-packer"
 pdm-packer = "pdm_packer:plugin"
 
 [tool.pdm]
-version = {use_scm = true}
+version = {source = "scm"}
+
+[tool.pdm.build]
 package-dir = "src"
 
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=6.1",
     "towncrier~=19.2",
+    "pdm>=2.0",
     "parver>=0.3"
 ]
 

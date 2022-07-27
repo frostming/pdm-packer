@@ -5,9 +5,9 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
-from pdm import Project
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.models.environment import Environment
+from pdm.project import Project
 from pdm.utils import cached_property
 
 IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
@@ -29,7 +29,7 @@ class PackEnvironment(Environment):
         self._dir.cleanup()
 
     def _compile_to_pyc(self, dest: Path) -> None:
-        args = [self.interpreter.executable, str(IN_PROCESS_SCRIPT), str(dest)]
+        args = [str(self.interpreter.path), str(IN_PROCESS_SCRIPT), str(dest)]
         subprocess.check_output(args, stderr=subprocess.STDOUT)
 
     def prepare_lib_for_pack(self, compile: bool = False) -> Path:

@@ -7,7 +7,6 @@ import zipfile
 from pathlib import Path
 
 import pytest
-from pdm.models.pip_shims import global_tempdir_manager
 from pdm.utils import cd, is_editable
 
 from pdm_packer.env import PackEnvironment
@@ -39,11 +38,10 @@ def example_project(invoke, main):
 
 
 def test_pack_env_all_non_editable(example_project):
-    with global_tempdir_manager():
-        with PackEnvironment(example_project) as env:
-            env.prepare_lib_for_pack()
-            for _, v in env.get_working_set().items():
-                assert not is_editable(v)
+    with PackEnvironment(example_project) as env:
+        env.prepare_lib_for_pack()
+        for _, v in env.get_working_set().items():
+            assert not is_editable(v)
 
 
 def test_create_without_main_error(example_project, invoke):

@@ -5,7 +5,7 @@
     :author: Frost Ming <mianghong@gmail.com>
     :license: MIT
 """
-from pdm import Core
+from pdm.core import Core
 
 from .command import PackCommand
 
