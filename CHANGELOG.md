@@ -1,6 +1,15 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.5.0](https://github.com/frostming/pdm-packer/releases/tag/0.5.0) (2022-12-12)
+---------------------------------------------------------------------------------
+
+### Bug Fixes
+
+- Update the import paths according to the deprecation. [#20](https://github.com/frostming/pdm-packer/issues/20)
+- Fix the code compatibility with `pdm 2.3.0+`. [#24](https://github.com/frostming/pdm-packer/issues/24)
+
+
 [v0.3.2](https://github.com/frostming/pdm-packer/releases/tag/0.3.2) (2022-05-13)
 ---------------------------------------------------------------------------------
 
