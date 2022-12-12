@@ -107,7 +107,7 @@ class PackCommand(BaseCommand):
         if options.main:
             main = options.main
         else:
-            scripts = project.pyproject.settings.get("scripts", {})
+            scripts = project.pyproject.metadata.get("scripts", {})
             if scripts:
                 main = str(scripts[next(iter(scripts))])
 

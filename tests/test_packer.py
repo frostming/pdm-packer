@@ -116,8 +116,8 @@ def test_create_pyz_without_py(example_project, invoke, tmp_path):
 
 
 def test_pack_respect_console_script(example_project, invoke, tmp_path):
-    example_project.meta["scripts"] = {"app": "app:main"}
-    example_project.write_pyproject()
+    example_project.pyproject.metadata["scripts"] = {"app": "app:main"}
+    example_project.pyproject.write()
     with cd(tmp_path):
         invoke(["pack"], obj=example_project)
     output = tmp_path / "test_app.pyz"
