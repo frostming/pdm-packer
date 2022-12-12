@@ -22,16 +22,21 @@ def example_project(invoke, main):
         "import requests\ndef main():\n    print(requests.__version__)\n"
     )
     project = main.create_project(tmp_path)
-    project.pyproject = {
-        "project": {
-            "name": "test_app",
-            "version": "0.1.0",
-            "requires-python": ">=3.7",
-            "dependencies": ["requests==2.24.0"],
-        },
-        "build-system": {"requires": ["pdm-pep517"], "build-backend": "pdm.pep517.api"},
-    }
-    project.write_pyproject()
+    project.pyproject.set_data(
+        {
+            "project": {
+                "name": "test_app",
+                "version": "0.1.0",
+                "requires-python": ">=3.7",
+                "dependencies": ["requests==2.24.0"],
+            },
+            "build-system": {
+                "requires": ["pdm-pep517"],
+                "build-backend": "pdm.pep517.api",
+            },
+        }
+    )
+    project.pyproject.write()
     invoke(["install"], obj=project)
 
     return project
