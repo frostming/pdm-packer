@@ -8,7 +8,7 @@ from typing import Any
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.models.environment import Environment
 from pdm.project import Project
-from pdm.utils import cached_property
+from pdm.compat import cached_property
 
 IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
 
@@ -41,7 +41,7 @@ class PackEnvironment(Environment):
         requirements = project.get_dependencies().values()
         candidates = resolve_candidates_from_lockfile(project, requirements)
         synchronizer = project.core.synchronizer_class(
-            candidates, self, install_self=bool(project.meta.name), no_editable=True
+            candidates, self, install_self=bool(project.name), no_editable=True
         )
         synchronizer.synchronize()
         dest = Path(this_paths["purelib"])

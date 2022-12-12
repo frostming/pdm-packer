@@ -75,7 +75,7 @@ class PackCommand(BaseCommand):
         if options.output:
             output = options.output
         else:
-            name = project.meta.name or project.root.name
+            name = project.name or project.root.name
             name = name.replace("-", "_")
             suffix = ".pyz" if not options.exe else ".exe" if os.name == "nt" else ""
             output = Path(name + suffix)
@@ -107,7 +107,7 @@ class PackCommand(BaseCommand):
         if options.main:
             main = options.main
         else:
-            scripts = project.meta.get("scripts", {})
+            scripts = project.pyproject.settings.get("scripts", {})
             if scripts:
                 main = str(scripts[next(iter(scripts))])
 
