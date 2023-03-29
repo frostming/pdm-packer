@@ -7,13 +7,17 @@ from typing import Any
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.compat import cached_property
-from pdm.models.environment import Environment
 from pdm.project import Project
+
+try:
+    from pdm.environments import PythonLocalEnvironment as BaseEnvironment
+except ImportError:
+    from pdm.models.environment import Environment as BaseEnvironment
 
 IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
 
 
-class PackEnvironment(Environment):
+class PackEnvironment(BaseEnvironment):
     def __init__(self, project: Project) -> None:
         super().__init__(project)
         self._dir = TemporaryDirectory(prefix="pdm-pack-")
