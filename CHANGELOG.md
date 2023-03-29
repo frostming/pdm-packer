@@ -1,6 +1,14 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.6.0](https://github.com/frostming/pdm-packer/releases/tag/0.6.0) (2023-03-29)
+---------------------------------------------------------------------------------
+
+### Features & Improvements
+
+- Add compatible import statement for the next PDM release. [#31](https://github.com/frostming/pdm-packer/issues/31)
+
+
 [v0.5.0](https://github.com/frostming/pdm-packer/releases/tag/0.5.0) (2022-12-12)
 ---------------------------------------------------------------------------------
 
