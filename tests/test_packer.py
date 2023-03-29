@@ -124,7 +124,6 @@ def test_pack_respect_console_script(example_project, invoke, tmp_path):
     assert output.exists()
 
     with zipfile.ZipFile(output) as zf:
-
         main = [
             line.decode().rstrip()
             for line in zf.open("__main__.py")
