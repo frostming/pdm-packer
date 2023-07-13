@@ -42,7 +42,7 @@ package-dir = "src"
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=6.1",
-    "towncrier~=19.2",
+    "towncrier>=19.2",
     "pdm>=2.3",
     "parver>=0.3"
 ]

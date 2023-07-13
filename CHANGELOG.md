@@ -1,6 +1,14 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.6.1](https://github.com/frostming/pdm-packer/releases/tag/0.6.1) (2023-07-13)
+---------------------------------------------------------------------------------
+
+### Bug Fixes
+
+- Include dist-info files in the zipapp. [#35](https://github.com/frostming/pdm-packer/issues/35)
+
+
 [v0.6.0](https://github.com/frostming/pdm-packer/releases/tag/0.6.0) (2023-03-29)
 ---------------------------------------------------------------------------------
 
