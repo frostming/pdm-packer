@@ -88,13 +88,9 @@ class PackCommand(BaseCommand):
     def handle(self, project: Project, options: argparse.Namespace) -> None:
         def file_filter(name: str) -> bool:
             path = Path(name)
-            first = path.parts[0]
             last = path.name
             return not (
-                first.endswith(".dist-info")
-                or first.endswith(".egg")
-                or last.endswith(".egg-link")
-                or "__pycache__" in path.parts
+                "__pycache__" in path.parts
                 or options.no_py
                 and last.endswith(".py")
                 or not options.compile

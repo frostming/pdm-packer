@@ -24,3 +24,5 @@ __pypackages__/
 .vscode/
 .idea/
 .testing/
+.pdm-build/
+.pdm-python
