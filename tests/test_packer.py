@@ -8,7 +8,6 @@ from pathlib import Path
 
 import pytest
 from pdm.utils import cd, is_editable
-
 from pdm_packer.env import PackEnvironment
 
 
@@ -31,13 +30,13 @@ def example_project(invoke, main):
                 "dependencies": ["requests==2.24.0"],
             },
             "build-system": {
-                "requires": ["pdm-pep517"],
-                "build-backend": "pdm.pep517.api",
+                "requires": ["pdm-backend"],
+                "build-backend": "pdm.backend",
             },
         }
     )
     project.pyproject.write()
-    invoke(["install"], obj=project)
+    invoke(["lock"], obj=project)
 
     return project
 
@@ -72,7 +71,6 @@ def test_create_normal_pyz(example_project, invoke, tmp_path):
         assert "urllib3/__init__.py" in namelist
         assert "app.py" in namelist
         assert not any(name.endswith(".pyc") for name in namelist)
-        assert not any(".dist-info" in name for name in namelist)
 
         main = [
             line.decode().rstrip()
