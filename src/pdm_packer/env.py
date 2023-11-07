@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import subprocess
+from functools import cached_property
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
-from pdm.compat import cached_property
 from pdm.project import Project
 
 try:
