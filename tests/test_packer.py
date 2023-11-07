@@ -8,7 +8,6 @@ from pathlib import Path
 
 import pytest
 from pdm.utils import cd, is_editable
-
 from pdm_packer.env import PackEnvironment
 
 
@@ -28,7 +27,7 @@ def example_project(invoke, main):
                 "name": "test_app",
                 "version": "0.1.0",
                 "requires-python": ">=3.7",
-                "dependencies": ["requests==2.24.0"],
+                "dependencies": ["requests==2.31.0"],
             },
             "build-system": {
                 "requires": ["pdm-backend"],
@@ -70,7 +69,7 @@ def test_create_normal_pyz(example_project, invoke, tmp_path):
         namelist = zf.namelist()
         assert "requests/__init__.py" in namelist
         assert "urllib3/__init__.py" in namelist
-        assert "requests-2.24.0.dist-info/METADATA" in namelist
+        assert "requests-2.31.0.dist-info/METADATA" in namelist
         assert "app.py" in namelist
         assert not any(name.endswith(".pyc") for name in namelist)
 
