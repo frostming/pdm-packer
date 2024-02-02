@@ -15,7 +15,11 @@ try:
 except ImportError:
     from pdm.models.environment import Environment as BaseEnvironment
 
-IN_PROCESS_SCRIPT = importlib.resources.files("pdm_packer")/"_compile_source.py"
+def get_IN_PROCESS_SCRIPT():
+    try:
+        return (importlib.resources.files("pdm_packer")/"_compile_source.py").as_file()
+    except:
+        return importlib.resources.path("pdm_packer", "_compile_source.py")
 
 class PackEnvironment(BaseEnvironment):
     def __init__(self, project: Project) -> None:
@@ -33,7 +37,7 @@ class PackEnvironment(BaseEnvironment):
         self._dir.cleanup()
 
     def _compile_to_pyc(self, dest: Path) -> None:
-        with importlib.resources.as_file(IN_PROCESS_SCRIPT) as scriptpath:
+        with get_IN_PROCESS_SCRIPT() as scriptpath:
             args = [str(self.interpreter.path), str(scriptpath), str(dest)]
             subprocess.check_output(args, stderr=subprocess.STDOUT)
 
