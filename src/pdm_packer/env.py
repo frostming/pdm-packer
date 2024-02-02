@@ -5,6 +5,7 @@ from functools import cached_property
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
+import importlib
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.project import Project
@@ -14,8 +15,7 @@ try:
 except ImportError:
     from pdm.models.environment import Environment as BaseEnvironment
 
-IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
-
+IN_PROCESS_SCRIPT = importlib.resources.files("pdm_packer")/"_compile_source.py"
 
 class PackEnvironment(BaseEnvironment):
     def __init__(self, project: Project) -> None:
@@ -33,8 +33,9 @@ class PackEnvironment(BaseEnvironment):
         self._dir.cleanup()
 
     def _compile_to_pyc(self, dest: Path) -> None:
-        args = [str(self.interpreter.path), str(IN_PROCESS_SCRIPT), str(dest)]
-        subprocess.check_output(args, stderr=subprocess.STDOUT)
+        with importlib.resources.as_file(IN_PROCESS_SCRIPT) as scriptpath:
+            args = [str(self.interpreter.path), str(scriptpath), str(dest)]
+            subprocess.check_output(args, stderr=subprocess.STDOUT)
 
     def prepare_lib_for_pack(self, compile: bool = False) -> Path:
         """Get a lib path containing all dependencies for pack.
