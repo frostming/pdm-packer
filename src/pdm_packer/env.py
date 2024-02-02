@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import importlib
 import subprocess
 from functools import cached_property
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
-import importlib
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.project import Project
@@ -15,11 +15,15 @@ try:
 except ImportError:
     from pdm.models.environment import Environment as BaseEnvironment
 
+
 def get_IN_PROCESS_SCRIPT():
     try:
-        return (importlib.resources.files("pdm_packer")/"_compile_source.py").as_file()
+        return (
+            importlib.resources.files("pdm_packer") / "_compile_source.py"
+        ).as_file()
     except:
         return importlib.resources.path("pdm_packer", "_compile_source.py")
+
 
 class PackEnvironment(BaseEnvironment):
     def __init__(self, project: Project) -> None:
