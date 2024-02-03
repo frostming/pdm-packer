@@ -6,6 +6,7 @@ from functools import cached_property
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
+import sys
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.project import Project
@@ -17,11 +18,11 @@ except ImportError:
 
 
 def get_IN_PROCESS_SCRIPT():
-    try:
+    if sys.version_info >= (3, 9):
         return (
             importlib.resources.files("pdm_packer") / "_compile_source.py"
         ).as_file()
-    except:
+    else:
         return importlib.resources.path("pdm_packer", "_compile_source.py")
 
 
