@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import importlib
 import subprocess
+import sys
 from functools import cached_property
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
-import sys
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.project import Project
