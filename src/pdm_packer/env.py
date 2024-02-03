@@ -17,7 +17,7 @@ except ImportError:
     from pdm.models.environment import Environment as BaseEnvironment
 
 
-def get_IN_PROCESS_SCRIPT():
+def get_in_process_script():
     if sys.version_info >= (3, 9):
         script = importlib.resources.files("pdm_packer") / "_compile_source.py"
         return importlib.resources.as_file(script)
@@ -41,7 +41,7 @@ class PackEnvironment(BaseEnvironment):
         self._dir.cleanup()
 
     def _compile_to_pyc(self, dest: Path) -> None:
-        with get_IN_PROCESS_SCRIPT() as scriptpath:
+        with get_in_process_script() as scriptpath:
             args = [str(self.interpreter.path), str(scriptpath), str(dest)]
             subprocess.check_output(args, stderr=subprocess.STDOUT)
 
