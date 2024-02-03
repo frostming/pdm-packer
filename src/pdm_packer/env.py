@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import importlib
+import importlib.resources
 import subprocess
 import sys
 from functools import cached_property
@@ -19,9 +19,8 @@ except ImportError:
 
 def get_IN_PROCESS_SCRIPT():
     if sys.version_info >= (3, 9):
-        return (
-            importlib.resources.files("pdm_packer") / "_compile_source.py"
-        ).as_file()
+        script = importlib.resources.files("pdm_packer") / "_compile_source.py"
+        return importlib.resources.as_file(script)
     else:
         return importlib.resources.path("pdm_packer", "_compile_source.py")
 
