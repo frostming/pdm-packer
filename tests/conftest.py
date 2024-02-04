@@ -1,4 +1,5 @@
 """Configuration for the pytest test suite."""
+
 import pytest
 from click.testing import CliRunner
 from pdm.core import Core
