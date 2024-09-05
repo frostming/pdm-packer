@@ -1,20 +1,16 @@
 from __future__ import annotations
 
 import importlib.resources
+import itertools
 import subprocess
 import sys
-from functools import cached_property
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
 from pdm.cli.actions import resolve_candidates_from_lockfile
+from pdm.environments import PythonEnvironment
 from pdm.project import Project
-
-try:
-    from pdm.environments import PythonLocalEnvironment as BaseEnvironment
-except ImportError:
-    from pdm.models.environment import Environment as BaseEnvironment
 
 
 def get_in_process_script():
@@ -25,14 +21,19 @@ def get_in_process_script():
         return importlib.resources.path("pdm_packer", "_compile_source.py")
 
 
-class PackEnvironment(BaseEnvironment):
-    def __init__(self, project: Project) -> None:
-        super().__init__(project)
-        self._dir = TemporaryDirectory(prefix="pdm-pack-")
+IN_PROCESS_SCRIPT = Path(__file__).with_name("_compile_source.py")
+PDM_VERSION = tuple(
+    map(
+        int,
+        itertools.takewhile(str.isdigit, importlib.metadata.version("pdm").split(".")),
+    )
+)
 
-    @cached_property
-    def packages_path(self) -> Path:
-        return Path(self._dir.name)
+
+class PackEnvironment(PythonEnvironment):
+    def __init__(self, project: Project) -> None:
+        self._dir = TemporaryDirectory(prefix="pdm-pack-")
+        super().__init__(project, prefix=self._dir.name)
 
     def __enter__(self) -> PackEnvironment:
         return self
@@ -52,10 +53,23 @@ class PackEnvironment(BaseEnvironment):
         project = self.project
         this_paths = self.get_paths()
         requirements = project.get_dependencies().values()
-        candidates = resolve_candidates_from_lockfile(project, requirements)
-        synchronizer = project.core.synchronizer_class(
-            candidates, self, install_self=bool(project.name), no_editable=True
-        )
+        if PDM_VERSION >= (2, 19):
+            from pdm.cli.actions import resolve_from_lockfile
+
+            packages = resolve_from_lockfile(project, requirements, groups=["default"])
+            synchronizer = project.core.get_synchronizer()(
+                self,
+                install_self=bool(project.name),
+                no_editable=True,
+                packages=packages,
+            )
+        else:
+            candidates = resolve_candidates_from_lockfile(
+                project, requirements, groups=["default"]
+            )
+            synchronizer = project.core.synchronizer_class(
+                candidates, self, install_self=bool(project.name), no_editable=True
+            )
         synchronizer.synchronize()
         dest = Path(this_paths["purelib"])
         if compile:
