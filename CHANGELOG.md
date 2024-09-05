@@ -1,6 +1,12 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.8.0](https://github.com/frostming/pdm-packer/releases/tag/0.8.0) (2024-09-05)
+---------------------------------------------------------------------------------
+
+### Features & Improvements
+
+- Update to support PDM 2.19. [#0](https://github.com/frostming/pdm-packer/issues/0)
 [v0.6.1](https://github.com/frostming/pdm-packer/releases/tag/0.6.1) (2023-07-13)
 ---------------------------------------------------------------------------------
 
