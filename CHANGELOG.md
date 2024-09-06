@@ -1,7 +1,12 @@
 # Changelog
 
 <!-- insertion marker -->
+[v0.8.1](https://github.com/frostming/pdm-packer/releases/tag/0.8.1) (2024-09-06)
+---------------------------------------------------------------------------------
 
+### Bug Fixes
+
+- Fix the wrong method used to get synchronizer for PDM 2.19+ [#44](https://github.com/frostming/pdm-packer/issues/44)
 [v0.8.0](https://github.com/frostming/pdm-packer/releases/tag/0.8.0) (2024-09-05)
 ---------------------------------------------------------------------------------
 
