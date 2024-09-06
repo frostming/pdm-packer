@@ -52,12 +52,12 @@ class PackEnvironment(PythonEnvironment):
         """
         project = self.project
         this_paths = self.get_paths()
-        requirements = project.get_dependencies().values()
+        requirements = project.get_dependencies()
         if PDM_VERSION >= (2, 19):
             from pdm.cli.actions import resolve_from_lockfile
 
             packages = resolve_from_lockfile(project, requirements, groups=["default"])
-            synchronizer = project.core.get_synchronizer()(
+            synchronizer = project.get_synchronizer()(
                 self,
                 install_self=bool(project.name),
                 no_editable=True,
