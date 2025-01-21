@@ -150,3 +150,11 @@ def test_pack_create_exe_file(example_project, invoke, tmp_path):
     assert output.stat().st_mode & stat.S_IEXEC
 
     subprocess.check_call([str(output)])
+
+
+def test_create_output_file_path(example_project, invoke, tmp_path):
+    output = tmp_path / "not_existing_directory" / "foo.pyz"
+    invoke(["pack", "-m", "app:main", "-o", str(output)], obj=example_project)
+
+    assert output.exists()
+    subprocess.check_call([sys.executable, str(output)])
