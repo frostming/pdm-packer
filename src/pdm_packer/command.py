@@ -80,6 +80,7 @@ class PackCommand(BaseCommand):
             suffix = ".pyz" if not options.exe else ".exe" if os.name == "nt" else ""
             output = Path(name + suffix)
 
+        output.parent.mkdir(parents=True, exist_ok=True)
         output.write_bytes(bytes)
         if options.exe:
             output.chmod(output.stat().st_mode | stat.S_IEXEC)
