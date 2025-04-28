@@ -27,7 +27,7 @@ def example_project(invoke, main):
             "project": {
                 "name": "test_app",
                 "version": "0.1.0",
-                "requires-python": ">=3.7",
+                "requires-python": ">=3.9",
                 "dependencies": ["requests==2.31.0"],
             },
             "build-system": {
