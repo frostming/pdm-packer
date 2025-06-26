@@ -32,6 +32,6 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: pdm install
+        run: pdm install -Gtest
       - name: Run Tests
         run: pdm test

@@ -28,19 +28,21 @@ Homepage = "https://github.com/frostming/pdm-packer"
 [project.entry-points.pdm]
 pdm-packer = "pdm_packer:plugin"
 
+[dependency-groups]
+test = [
+    "pytest>=6.1",
+    "pdm>=2.3"
+]
+dev = [
+    "towncrier>=19.2",
+    "parver>=0.3"
+]
+
 [tool.pdm]
 version = {source = "scm"}
 
 [tool.pdm.build]
 package-dir = "src"
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest>=6.1",
-    "towncrier>=19.2",
-    "pdm>=2.3",
-    "parver>=0.3"
-]
 
 [tool.pdm.scripts]
 release = "python -m tasks.release"
