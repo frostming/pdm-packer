@@ -8,7 +8,6 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
-from pdm.cli.actions import resolve_candidates_from_lockfile
 from pdm.environments import PythonEnvironment
 from pdm.project import Project
 
@@ -50,26 +49,19 @@ class PackEnvironment(PythonEnvironment):
         """Get a lib path containing all dependencies for pack.
         Editable packages will be replaced by non-editable ones.
         """
+        from pdm.cli.actions import resolve_from_lockfile
+
         project = self.project
         this_paths = self.get_paths()
         requirements = project.get_dependencies()
-        if PDM_VERSION >= (2, 19):
-            from pdm.cli.actions import resolve_from_lockfile
 
-            packages = resolve_from_lockfile(project, requirements, groups=["default"])
-            synchronizer = project.get_synchronizer()(
-                self,
-                install_self=bool(project.name),
-                no_editable=True,
-                packages=packages,
-            )
-        else:
-            candidates = resolve_candidates_from_lockfile(
-                project, requirements, groups=["default"]
-            )
-            synchronizer = project.core.synchronizer_class(
-                candidates, self, install_self=bool(project.name), no_editable=True
-            )
+        packages = resolve_from_lockfile(project, requirements, groups=["default"])
+        synchronizer = project.get_synchronizer()(
+            self,
+            install_self=bool(project.name),
+            no_editable=True,
+            packages=packages,
+        )
         synchronizer.synchronize()
         dest = Path(this_paths["purelib"])
         if compile:
