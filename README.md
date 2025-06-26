@@ -10,11 +10,11 @@ A PDM plugin that packs your packages into a zipapp
 
 ## Requirements
 
-pdm-packer requires Python >=3.7
+pdm-packer works with Python >=3.9 and PDM >=2.19
 
 ## Installation
 
-On PDM 1.6.4+, you can install the plugin directly by:
+You can install the plugin directly by:
 
 ```bash
 $ pdm plugin add pdm-packer
