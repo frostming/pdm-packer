@@ -1,7 +1,7 @@
 # Changelog
 
 <!-- insertion marker -->
-[v0.8.2](https://github.com/frostming/pdm-packer/releases/tag/0.8.2) (2025-06-26)
+## [v0.8.2](https://github.com/frostming/pdm-packer/releases/tag/0.8.2) (2025-06-26)
 
 ### Features & Improvements
 
@@ -22,6 +22,7 @@
 ### Miscellany
 
 - Refactor the release script. [#52](https://github.com/frostming/pdm-packer/issues/52)
+
 ## [v0.8.1](https://github.com/frostming/pdm-packer/releases/tag/0.8.1) (2024-09-06)
 
 ### Bug Fixes
