@@ -26,5 +26,4 @@ jobs:
           pip install dist/*.whl
       - name: Upload to Pypi
         run: |
-          pip install twine
-          twine upload --username __token__ --password ${{ secrets.PYPI_TOKEN }} dist/*
+          pipx run twine upload --username __token__ --password ${{ secrets.PYPI_TOKEN }} dist/*
